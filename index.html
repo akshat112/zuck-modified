@@ -7,9 +7,9 @@
     <body>
         <div id="stories"></div>
         <div id="btn" style="position:fixed;top:100px">
-                <button onclick="bwd()">B</button>
+                <button onclick="traverse('bwd')">B</button>
 
-                <button onclick="fwd()">F</button>
+                <button onclick="traverse('fwd')">F</button>
 
             </div>
         <script src="assets/js/zuck.js"></script>
@@ -125,7 +125,7 @@
                     window.bar = document.querySelector("div.viewing>div.slides-pointers>div>span.active").getElementsByTagName("b")[0];
                     console.log(window.bar);
                     console.log("======")
-
+                    clearInterval(window.increase)
                 },1)
                 
                     
