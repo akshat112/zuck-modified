@@ -61,6 +61,16 @@ var traverse = function traverse(pos){
     }
 }
 
+var togglePause = function togglePause(){
+    var viewing = document.querySelector(".viewing");
+    viewing.classList.toggle("paused");
+    if(window.vdo.paused){
+        window.vdo.play();
+    } else{
+        window.vdo.pause();
+    }
+}
+
 // var fwd = function fwd(){
 //     if(window.vdo.duration){
 //         window.barDuration = parseFloat(window.bar.style.animationDuration.slice(0,-1));
