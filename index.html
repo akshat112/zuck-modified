@@ -7,7 +7,7 @@
     <body>
         <div id="stories"></div>
         <div id="btn" style="position:fixed;top:100px">
-                <button>B</button>
+                <button onclick="bwd()">B</button>
 
                 <button onclick="fwd()">F</button>
 
@@ -45,7 +45,7 @@
                 Zuck.buildItem("ramon-1", "photo", 3, "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg", "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/1.jpg", '', false, false, timestamp()),
                 Zuck.buildItem("ramon-2", "video", 0, "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.mp4", "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.jpg", '', false, false, timestamp()),
                 Zuck.buildItem("ramon-3", "photo", 3, "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png", "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/3.png", 'https://ramon.codes', 'Visit my Portfolio', false, timestamp()),
-                Zuck.buildItem("ramon-4", "video", 0, "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.mp4", "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.jpg", '', false, false, timestamp())
+                Zuck.buildItem("ramon-4", "video", 0, "D:\\Videos\\addsyscall.mp4", "https://raw.githubusercontent.com/ramon82/assets/master/zuck.js/stories/2.jpg", '', false, false, timestamp())
               ]
             },
             {
@@ -109,6 +109,8 @@
                     // window.bar = document.getElementsByClassName("active")[0].getElementsByTagName("b")[0];
                     window.bar = document.querySelector("div.viewing>div.slides-pointers>div>span.active").getElementsByTagName("b")[0];
                     console.log("======")
+                    // clearInterval(window.increase);
+                    // clearInterval(window.decrease);
                     },1)
             },
             'onNavigateItem': function(storyId, nextStoryId, callback) { // on end story
@@ -123,7 +125,9 @@
                     window.bar = document.querySelector("div.viewing>div.slides-pointers>div>span.active").getElementsByTagName("b")[0];
                     console.log(window.bar);
                     console.log("======")
-                    },1)
+
+                },1)
+                
                     
                     
                 callback();
