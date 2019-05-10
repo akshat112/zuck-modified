@@ -1,67 +1,85 @@
-window.orig = 0;
 var traverse = function traverse(pos){
     window.bar = document.querySelector("div.viewing>div.slides-pointers>div>span.active").getElementsByTagName("b")[0];
-    if(window.orig==0){
-        window.orig = parseInt(window.bar.style.animationDuration.slice(0,-1)); //original duration
-    }
     clearInterval(window.increase);
+    
+    // If forward button pressed
     if(pos=='fwd'){
         if(window.vdo.duration){
-            window.bar.style.animationDuration = window.orig + 's';
-            window.barDuration = parseFloat(window.bar.style.animationDuration.slice(0,-1));
+            window.barDuration = window.ie.getElementsByTagName('video')[0].duration;
             window.ie.getElementsByTagName('video')[0].currentTime+=5;
             window.increase = setInterval(movefwd, 0);
             var mw = 0;
             function movefwd() {
               if (mw >= 100) {
                 clearInterval(window.increase);
-                window.bar.style.animationDuration = 0 +'s';
+
+                window.bar.style.animationDuration = window.vdo.duration +'s';
+                window.zuckObj.nextItem(false);
               } else {
-                var cp = window.ie.getElementsByTagName('video')[0].currentTime/window.barDuration*100; //current percentage
+                var cp = window.ie.getElementsByTagName('video')[0].currentTime/window.ie.getElementsByTagName('video')[0].duration*100; //current percentage
                 window.bar.style.minWidth = cp + '%'; 
                 mw=cp;
               }
             }
         }
 
-
+// If backward button pressed
     } else if(pos=='bwd'){
-        // clearInterval(window.increase);
+        
+
+        $("#btn").hide(function(){
+            setTimeout(function(){
+                $("#btn").show();
+            },5000)
+        });
+
+
+        window.barDuration = window.ie.getElementsByTagName('video')[0].duration;
         var ct = window.ie.getElementsByTagName('video')[0].currentTime;
         if(ct>5){
+
+            // if((ct - window.prevLoc) < 5){
+            //     console.log("Blah log: "+ (ct - window.prevLoc));
+            //     console.log("Prev loc: " + window.prevLoc);
+            //     console.log(window.ie.getElementsByTagName('video')[0].currentTime - window.prevLoc)
+            //     var increment = Math.abs(5-(5-(window.prevLoc - window.ie.getElementsByTagName('video')[0].currentTime)));
+            // } else{
+            //     var increment = 5;
+            // }
+
             window.ie.getElementsByTagName('video')[0].currentTime = ct - 5;
-            window.bar.style.animationDuration = (parseInt(window.bar.style.animationDuration.slice(0,-1)) + 5) + 's';
-            // window.bar.style.animationDuration = 999999 +'s';
+            //window.prevLoc = window.ie.getElementsByTagName('video')[0].currentTime;
+            window.bar = document.querySelector("div.viewing>div.slides-pointers>div>span.active").getElementsByTagName("b")[0];
+
+            window.bar.style.animationDuration = (parseFloat(window.bar.style.animationDuration.slice(0,-1)) + 5) + 's';
+            console.log("AD: " + window.bar.style.animationDuration);
             window.increase = setInterval(movefwd, 0);
             var mw = 0;
             function movefwd() {
                 if (mw >= 100) {
                     clearInterval(window.increase);
-                    window.bar.style.animationDuration = 0 +'s';
+                    // window.bar.style.animationDuration = window.vdo.duration +'s';
+                    window.zuckObj.nextItem(false);
                 } else {
-                    var cp = window.ie.getElementsByTagName('video')[0].currentTime/window.barDuration*100; //current percentage
-                    // window.bar.style.minWidth = 0.00001 + '%';
-                    window.bar.style.minWidth = 0 + '%';
+                    var cp = window.ie.getElementsByTagName('video')[0].currentTime/window.ie.getElementsByTagName('video')[0].duration*100; //current percentage
+                    window.bar.style.minWidth = cp + '%';
                     window.bar.style.width = cp + '%';
+                    // window.bar.style.animationDuration = window.ie.getElementsByTagName('video')[0].duration + 's';
                     mw=cp;
                 }
             }
-        } 
+        }
         else{
-            // window.bar.style.animationDuration = (parseInt(window.bar.style.animationDuration.slice(0,-1)))+window.ie.getElementsByTagName('video')[0].currentTime + 's';
+            // Removing the existing bar from the dom and adds a new bar with animation duration equal to video duration
             window.ie.getElementsByTagName('video')[0].currentTime = 0.00001;
-            // window.nextTimeout = setTimeout(function(){
-            //     window.zuckObj.nextItem(false);
-            // }, window.vdo.duration*1000)
             var pspan = document.querySelector("div.viewing>div.slides-pointers>div>span.active");
             var theBar = pspan.getElementsByTagName("b")[0];
             pspan.removeChild(theBar);
             console.log(theBar);
             var bTag = "<b style='animation-duration: "+ window.vdo.duration +"s'>";
-            // var bTag = "<b style='"+ window.durStyle.style.cssText +"'>";
             pspan.innerHTML=bTag;
 
-
+            // Switch to next story when animation ends
             $("div.viewing>div.slides-pointers>div>span.active>b").bind('oanimationend animationend webkitAnimationEnd', function() { 
                 window.zuckObj.nextItem(false); 
              });
@@ -70,6 +88,7 @@ var traverse = function traverse(pos){
     }
 }
 
+// Pause button toggle
 var togglePause = function togglePause(){
     var viewing = document.querySelector(".viewing");
     viewing.classList.toggle("paused");
@@ -79,23 +98,3 @@ var togglePause = function togglePause(){
         window.vdo.pause();
     }
 }
-
-// var fwd = function fwd(){
-//     if(window.vdo.duration){
-//         window.barDuration = parseFloat(window.bar.style.animationDuration.slice(0,-1));
-//         window.ie.getElementsByTagName('video')[0].currentTime+=5;
-//         var id = setInterval(frame, 0);
-//         mw = 0;
-//         function frame() {
-//           if (mw >= 100) {
-//             clearInterval(id);
-//             window.bar.style.animationDuration = 0 +'s';
-//           } else {
-
-//             var cp = window.ie.getElementsByTagName('video')[0].currentTime/window.barDuration*100; //current percentage
-//             window.bar.style.minWidth = cp + '%'; 
-//             mw=cp;
-//           }
-//         }
-//     }
-// }
