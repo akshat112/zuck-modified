@@ -12,6 +12,7 @@
     var ZuckJS = function ZuckJS(timeline, options) {
       var d = document;
       var zuck = this;
+      window.zuckObj = this;
 
       if (typeof timeline === 'string') {
         timeline = d.getElementById(timeline);
@@ -377,6 +378,7 @@
               }
 
               var storyId = zuck.internalData['currentStory'];
+
               var items = query("#zuck-modal [data-story-id=\"".concat(storyId, "\"]"));
 
               if (items) {

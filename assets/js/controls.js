@@ -50,12 +50,21 @@ var traverse = function traverse(pos){
         else{
             // window.bar.style.animationDuration = (parseInt(window.bar.style.animationDuration.slice(0,-1)))+window.ie.getElementsByTagName('video')[0].currentTime + 's';
             window.ie.getElementsByTagName('video')[0].currentTime = 0.00001;
+            // window.nextTimeout = setTimeout(function(){
+            //     window.zuckObj.nextItem(false);
+            // }, window.vdo.duration*1000)
             var pspan = document.querySelector("div.viewing>div.slides-pointers>div>span.active");
             var theBar = pspan.getElementsByTagName("b")[0];
             pspan.removeChild(theBar);
             console.log(theBar);
             var bTag = "<b style='animation-duration: "+ window.vdo.duration +"s'>";
+            // var bTag = "<b style='"+ window.durStyle.style.cssText +"'>";
             pspan.innerHTML=bTag;
+
+
+            $("div.viewing>div.slides-pointers>div>span.active>b").bind('oanimationend animationend webkitAnimationEnd', function() { 
+                window.zuckObj.nextItem(false); 
+             });
         }
 
     }
